@@ -1,0 +1,17 @@
+
+> superagent-launch-desk-v7@1.0.0 test
+> node --test tests/*.test.mjs
+
+✔ 搜索能匹配任务编号和名称，不改变输入 (0.9295ms)
+✔ 状态与优先级筛选同时生效 (0.0785ms)
+✔ 更新一项状态时，其他任务保持原样 (0.234541ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51.216791
+
+退出码：0

@@ -1,0 +1,40 @@
+{
+  "仓库": "https://github.com/satnaing/shadcn-admin",
+  "提交": "e16c87f213a5ba5e45964e9b67c792105ec74d26",
+  "核对日期": "2026-11-06",
+  "许可": "MIT",
+  "原始文件SHA256": {
+    "LICENSE": "d28c723c33a18dfed6af67b1a0ac368724f79bcb80750d3e080dbcf8dedb9e4b",
+    "src/features/tasks/index.tsx": "36d8a5276e721a5c84a116c9a22be57af409824875f1833cc3f40132853a36a5",
+    "src/features/tasks/components/tasks-table.tsx": "a3533fc8aa0f2dff2f7aec88bcbfc24b4bf7ed0a096f3ecf2e29d8475485466c",
+    "src/features/tasks/components/tasks-columns.tsx": "6efcadaaa78fee6b1adf09bed5cd6f71a21a9bd8b1493d1af281e03d508db155",
+    "src/features/tasks/data/data.tsx": "509333ff858507b640d163b6e31bc82cae3344d9bc436c9f14dc4d914de83f58",
+    "src/components/layout/app-sidebar.tsx": "cd363c86fe2e6ad838c013075c51f2c5e7cb61e08082020351c48896c882bc87",
+    "src/components/layout/team-switcher.tsx": "5ea0594bf435f2e8cde44994e68e1c753ed12a9c864bc5db4292ce0d42749299",
+    "src/components/layout/header.tsx": "f19060d14bdcb6efa98f1eee05452ecdc22d39a8a358af0d6e319e7ec9563777",
+    "src/components/layout/main.tsx": "e200dbc0e1b8cf383fdf6b7f7588ac1c9419de65f2658692e7941324bd09c572",
+    "src/components/layout/nav-group.tsx": "dd90536e487751b28fd8c850a0728a67784d5185c589b62fca580c992b1d2ed6",
+    "src/components/layout/nav-user.tsx": "739f42c8f0b2afde6a0f202f751399dea4b0a72c36113488bffb707f09207b34",
+    "src/styles/theme.css": "faee559c9a21b2084bf7bae193e70f0ab18b18a393a06fec1408669652c266a1",
+    "src/lib/utils.ts": "cc244af40baa5fe88abff3f80b424a7aa654b3137a7db612a8fe94861b61e04e",
+    "src/components/ui/table.tsx": "8ebadfa3965fc72792d160579ff6beb0b80d9dd0d3acd56db7a34168e956b531",
+    "src/components/ui/button.tsx": "97ed8ef5651a6e264ded042b024b5be39673ba2ff222017fbcf845cf3ed37226",
+    "src/components/ui/badge.tsx": "a642d7a932b91ec610f09078452d34c379900845066955311506b6d503ea11e6",
+    "src/components/ui/checkbox.tsx": "0428a4df7254b8248d5c7cf240dbe4820fa9014691914acf77f239c66b0429e6",
+    "src/components/ui/avatar.tsx": "56d4401304c5c4e83b20a9c9c20ac6c8033721d25869e437c52d6e042c3db69e"
+  },
+  "原样复用文件": [
+    "src/components/ui/table.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/checkbox.tsx",
+    "src/components/ui/avatar.tsx",
+    "src/styles/theme.css"
+  ],
+  "适配说明": {
+    "src/main.jsx": "沿原Tasks标题、工具条、表格和侧栏结构，适配为六项中文产品发布任务；移除Router、登录、批量删除和无关页面；任务列表不展示成员，侧栏使用模拟人物林舟。",
+    "src/task-filter.mjs": "独立数据筛选和单项状态更新；教学副本故意保留只看待处理没有排除已完成项的问题。",
+    "src/lib/utils.ts": "使用已安装cn包，不引入额外样式合并依赖。"
+  },
+  "说明": "筛选故障由教学副本设置，不是上游产品的缺陷。"
+}

@@ -1,0 +1,28 @@
+
+> superagent-launch-desk-v7@1.0.0 reproduce
+> node scripts/reproduce-filter.mjs
+
+点击“只看待处理”后显示： 产品落地页（todo）、产品截图（todo）、演示视频（in-progress）、首发推文（in-progress）、发布说明（review）、GitHub 项目（done）
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: 只看待处理时，不应出现已完成的 GitHub 项目
+
+true !== false
+
+    at file://$项目目录/scripts/reproduce-filter.mjs:7:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+
+退出码：1
