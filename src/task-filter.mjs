@@ -3,7 +3,8 @@ export function filterTasks(tasks, { search = '', status = 'all', priority = 'al
   return tasks.filter(task =>
     (!query || `${task.id} ${task.title}`.toLocaleLowerCase().includes(query)) &&
     (status === 'all' || task.status === status) &&
-    (priority === 'all' || task.priority === priority)
+    (priority === 'all' || task.priority === priority) &&
+    (!onlyPending || task.status !== 'done') // 只看待处理：仅排除已完成，保留其他状态
   );
 }
 
