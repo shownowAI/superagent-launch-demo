@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowDown, ArrowRight, ArrowUp, Check, CheckCircle, ChevronDown, ChevronLeft, ChevronRight, Circle, CircleDashed, Command, ListTodo, PanelLeft, Search, Timer, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUp, Check, CheckCircle, ChevronDown, ChevronLeft, ChevronRight, Circle, CircleDashed, ClipboardList, Command, Copy, ListTodo, PanelLeft, Search, Timer, X } from 'lucide-react';
 import { Avatar, AvatarFallback } from './components/ui/avatar';
 import { Badge } from './components/ui/badge';
 import { Button } from './components/ui/button';
 import { Checkbox } from './components/ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table';
 import { initialTasks } from './seed-data.mjs';
-import { filterTasks, updateTaskStatus } from './task-filter.mjs';
+import { buildReleaseChecklist, filterTasks, updateTaskStatus } from './task-filter.mjs';
 import './styles.css';
 
 const statuses = [
@@ -30,6 +30,25 @@ function App() {
   const [onlyPending, setOnlyPending] = useState(false);
   const [selected, setSelected] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showChecklist, setShowChecklist] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const checklistRef = useRef(null);
+  const checklistText = buildReleaseChecklist(tasks);
+  const copyChecklist = async () => {
+    try {
+      await navigator.clipboard.writeText(checklistText);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      if (checklistRef.current) {
+        const range = document.createRange();
+        range.selectNodeContents(checklistRef.current);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+  };
   const visible = filterTasks(tasks, { search, status, priority, onlyPending });
   const done = tasks.filter(task => task.status === 'done').length;
   const hasFilters = search || status !== 'all' || priority !== 'all' || onlyPending;
@@ -59,10 +78,23 @@ function App() {
           <div className='desk-toolbar' role='toolbar' aria-label='任务筛选'>
             <div className='task-search'><Search size={15} /><input aria-label='搜索任务' placeholder='搜索任务名称或编号...' value={search} onChange={e => setSearch(e.target.value)} />{search && <button aria-label='清空搜索' onClick={() => setSearch('')}><X size={13} /></button>}</div>
             <Button size='sm' variant={onlyPending ? 'default' : 'outline'} aria-pressed={onlyPending} onClick={() => setOnlyPending(value => !value)}><CircleDashed size={15} />只看待处理{onlyPending && <Check size={14} />}</Button>
+            <Button size='sm' variant={showChecklist ? 'default' : 'outline'} aria-pressed={showChecklist} onClick={() => setShowChecklist(value => !value)}><ClipboardList size={15} />生成发布清单{showChecklist && <Check size={14} />}</Button>
             <label className='toolbar-select'><span>状态</span><select aria-label='按状态筛选' value={status} onChange={e => setStatus(e.target.value)}><option value='all'>全部状态</option>{statuses.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}</select><ChevronDown size={13} /></label>
             <label className='toolbar-select'><span>优先级</span><select aria-label='按优先级筛选' value={priority} onChange={e => setPriority(e.target.value)}><option value='all'>全部优先级</option>{priorities.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}</select><ChevronDown size={13} /></label>
             {hasFilters && <Button size='sm' variant='ghost' onClick={reset}>重置<X size={13} /></Button>}
           </div>
+          {showChecklist && (
+            <div className='checklist-panel' role='region' aria-label='发布清单'>
+              <div className='checklist-head'>
+                <div className='checklist-title'><ClipboardList size={15} />发布清单</div>
+                <div className='checklist-actions'>
+                  <Button size='sm' variant='ghost' onClick={copyChecklist}><Copy size={14} />{copied ? '已复制' : '复制'}</Button>
+                  <Button size='sm' variant='ghost' aria-label='收起发布清单' onClick={() => setShowChecklist(false)}><X size={14} /></Button>
+                </div>
+              </div>
+              <pre ref={checklistRef} className='checklist-text'>{checklistText}</pre>
+            </div>
+          )}
           <div className='task-table-frame'>
             <Table className='task-table' aria-label='产品发布任务'>
               <TableHeader><TableRow><TableHead className='selection-cell'><Checkbox aria-label='选择当前显示的全部任务' checked={visible.length > 0 && visible.every(task => selected.includes(task.id))} onCheckedChange={checked => setSelected(current => checked ? [...new Set([...current, ...visible.map(task => task.id)])] : current.filter(id => !visible.some(task => task.id === id)))} /></TableHead><TableHead>任务编号</TableHead><TableHead className='task-title-head'>事项</TableHead><TableHead>状态</TableHead><TableHead>截止</TableHead><TableHead>优先级</TableHead></TableRow></TableHeader>
